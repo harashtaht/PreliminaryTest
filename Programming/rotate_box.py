@@ -31,3 +31,6 @@ rotate_k = 1
 
 # print(list_1[1][0])
 # print(list_1[3][1:])
+
+aa = "waiting_for_payment_service"
+print(len(aa))
