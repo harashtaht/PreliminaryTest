@@ -1,3 +1,7 @@
+##### Database and SQL ######
+
+#### Part 1: Database Design
+
 SHOW DATABASES;
 
 CREATE DATABASE IF NOT EXISTS Kulina;
@@ -47,6 +51,7 @@ select * from ku_user_location_type;
 -- ("appartment"),
 -- ("office"),
 -- ("other");
+
 
 /* TABLE 3- ku_user_location_status TABLE Creation*/
 
@@ -269,3 +274,41 @@ CREATE TABLE ku_order_detail
 );
 
 
+show tables;
+
+select * from ku_user_status;
+select * from ku_order_detail;
+
+
+#### Part 2: SQL
+# Info:
+/* 
+Please write an SQL query to show the details of successful delivery history for each user in September 2019. 
+The details include:
+user id, username, user email, user phone number, delivery_date, delivered product name, 
+product category (separated by commas), quantity and 
+delivery address sorted by delivery date and followed again by user id. 
+Based on that sorting value, you need to provide a ‘total’ column containing progressive sum of the quantity.
+
+*/
+
+### u 1234 + ALL o
+SELECT *FROM ku_order o
+LEFT JOIN ku_user u on u.id = o.user_id
+WHERE o.status = 2;
+
+SELECT * FROM ku_order_status; #id 2 = success
+
+SELECT * FROM ku_order;
+
+SELECT *, ku_user.id FROM ku_user;
+
+SELECT u.id, u.name, u.email, u.phone FROM ku_user u
+RIGHT JOIN ku_order o on o.user_id = u.id
+WHERE o.status = 2;
+### TRY TO JOIN WITH ku_user_location to get "location" (9)
+
+
+SELECT * FROM ku_order_detail_status;
+
+select * from ku_user_location_status;
