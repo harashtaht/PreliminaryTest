@@ -31,6 +31,3 @@ rotate_k = 1
 
 # print(list_1[1][0])
 # print(list_1[3][1:])
-
-aa = "Drink Not Provided"
-print(len(aa))
