@@ -116,3 +116,25 @@ CREATE TABLE ku_order_status
 -- ("refund_declined");-- 
 
 -- select * from ku_order_status;
+
+/* TABLE 6 - ku_product_status TABLE Creation*/
+
+CREATE TABLE ku_product_status
+(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(30) NOT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    );
+
+-- INSERT INTO ku_product_status (name) VALUES
+-- ("active"),
+-- ("inactive");
+
+-- select * from ku_product_status;
+
+/* TABLE 7 - ku_user_location TABLE Creation*/
+
+CREATE TABLE ku_user_location
+(
+	
