@@ -13,7 +13,7 @@ CREATE TABLE ku_user_status
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
     
 -- DROP TABLE ku_user_status;-- 
@@ -36,7 +36,7 @@ CREATE TABLE ku_user_location_type
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
     
 show tables;
@@ -55,7 +55,7 @@ CREATE TABLE ku_user_location_status
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(10) NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
 -- INSERT INTO ku_user_location_status (name) VALUES
@@ -78,7 +78,7 @@ CREATE TABLE ku_user
     photo BLOB NOT NULL,
     status INT DEFAULT NULL,
 	created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (status) REFERENCES ku_user_status(id)
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE ku_order_status
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
 -- DROP TABLE ku_order_status;
@@ -124,7 +124,7 @@ CREATE TABLE ku_product_status
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     );
 
 -- INSERT INTO ku_product_status (name) VALUES
@@ -144,7 +144,7 @@ CREATE TABLE ku_user_location
 	location GEOMETRY NOT NULL,
     address VARCHAR(255),
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 	FOREIGN KEY (type) REFERENCES ku_user_location_type(id),
     FOREIGN KEY (status) REFERENCES ku_user_location_status(id),
     FOREIGN KEY (user_id) REFERENCES ku_user(id)
@@ -178,7 +178,7 @@ CREATE TABLE ku_order
 	user_id INT DEFAULT NULL,
     status INT DEFAULT NULL,
     created_at TIMESTAMP DEFAULT current_timestamp,
-    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (status) REFERENCES ku_order_status(id),
     FOREIGN KEY (user_id) REFERENCES ku_user(id)
 );
@@ -190,10 +190,82 @@ select * from ku_order;
 CREATE TABLE ku_product
 (
 	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    
-
+    name VARCHAR(255) NOT NULL,
+    effective_date DATE,
+    effective_until DATE,
+    photo BLOB NOT NULL,
+    price DECIMAL(19,1),
+    status INT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	FOREIGN KEY (status) REFERENCES ku_product_status(id)
 );
 
--- INSERT INTO ku_product (name, effective_date, effective_until, photo, price, status) VALUES;
+-- INSERT INTO ku_product (name, effective_date, effective_until, photo, price, status) VALUES
 -- ("Basic Lunch",DATE("2019-12-22"),DATE("2019-12-28"),"basic-lunch.jpg",20000.0,2),
--- ("Deluxe Lunch",DATE("2019-12-22"),DATE("2019-12-28"),"kulina-deluxe-lunch.jpg",33250.0,2),
+-- ("Deluxe Lunch",DATE("2019-12-22"),DATE("2019-12-28"),"kulina-deluxe-lunch.jpg",33250.0,2);
+
+select * from ku_product;
+DROP TABLE ku_product;
+
+/* TABLE 10 - ku_category TABLE Creation*/
+
+
+CREATE TABLE ku_category
+(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(80) NOT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+select * from ku_category;
+
+/* TABLE 11 - ku_order_detail_status TABLE Creation*/
+
+CREATE TABLE ku_order_detail_status
+(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(20) NOT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+select * from ku_order_detail_status;
+
+
+/* TABLE 12 - ku_product_category TABLE Creation*/
+
+CREATE TABLE ku_product_category
+(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    product_id INT DEFAULT NULL,
+    category_id INT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	FOREIGN KEY (product_id) REFERENCES ku_product(id),
+    FOREIGN KEY (category_id) REFERENCES ku_category(id)
+);
+
+SELECT * FROM ku_product_category;
+
+/* TABLE 13 - ku_product_category TABLE Creation*/
+
+CREATE TABLE ku_order_detail
+(
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_location_id INT DEFAULT NULL,
+    order_id INT DEFAULT NULL,
+    product_id INT DEFAULT NULL,
+    quantity INT NOT NULL,
+    delivery_date DATE,
+    status INT DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT current_timestamp,
+    updated_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (product_id) REFERENCES ku_product(id),
+    FOREIGN KEY (order_id) REFERENCES ku_order(id),
+    FOREIGN KEY (user_location_id) REFERENCES ku_user_location(id),
+    FOREIGN KEY (status) REFERENCES ku_order_detail_status(id)
+);
+
+

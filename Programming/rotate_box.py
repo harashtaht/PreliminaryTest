@@ -32,5 +32,5 @@ rotate_k = 1
 # print(list_1[1][0])
 # print(list_1[3][1:])
 
-aa = "Gedung Summitmas II, Jl. Jend. Sudirman No.Kav 61-62, RT.5/RW.3, Senayan, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12190, Indonesia"
+aa = "Drink Not Provided"
 print(len(aa))
