@@ -272,9 +272,3 @@ CREATE TABLE ku_order_detail
     FOREIGN KEY (user_location_id) REFERENCES ku_user_location(id),
     FOREIGN KEY (status) REFERENCES ku_order_detail_status(id)
 );
-
-
-show tables;
-
-select * from ku_user_status;
-select * from ku_order_detail;
