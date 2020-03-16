@@ -22,6 +22,10 @@
 length_n = 6
 elements_a = [2,2,1,3,1,1]
 rotate_k = 1
+height_box = max(elements_a)
+total_el = sum(elements_a)
+
+
 
 # print(type(length_n))
 # print(type(elements_a))
