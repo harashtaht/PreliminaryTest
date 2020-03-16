@@ -5,7 +5,7 @@
 # Box is represented as array A
 # During delivery box is rotated "k" times 90 degrees clockwise rotation
 # K is inputted
-
+ 
 # Code Input - Must separate each string, append to list
 
 # Input
